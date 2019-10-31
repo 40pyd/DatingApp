@@ -1,13 +1,22 @@
-import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  HammerGestureConfig,
+  HAMMER_GESTURE_CONFIG
+} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { BsDropdownModule, TabsModule, BsDatepickerModule } from 'ngx-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  BsDropdownModule,
+  TabsModule,
+  BsDatepickerModule
+} from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
-import {NgxGalleryModule} from 'ngx-gallery';
+import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -32,64 +41,63 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 
 export function tokenGet() {
-   return localStorage.getItem('token');
+  return localStorage.getItem('token');
 }
 
-export class CustomHammerConfig extends HammerGestureConfig  {
-   overrides = {
-       pinch: { enable: false },
-       rotate: { enable: false }
-   };
+export class CustomHammerConfig extends HammerGestureConfig {
+  overrides = {
+    pinch: { enable: false },
+    rotate: { enable: false }
+  };
 }
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      NavComponent,
-      HomeComponent,
-      RegisterComponent,
-      MemberListComponent,
-      ListsComponent,
-      MessagesComponent,
-      MemberCardComponent,
-      MemberDetailComponent,
-      MemberEditComponent,
-      PhotoEditorComponent
-   ],
-   imports: [
-      BrowserModule,
-      BrowserAnimationsModule,
-      HttpClientModule,
-      FormsModule,
-      ReactiveFormsModule,
-      BsDropdownModule.forRoot(),
-      BsDatepickerModule.forRoot(),
-      TabsModule.forRoot(),
-      RouterModule.forRoot(appRoutes),
-      NgxGalleryModule,
-      FileUploadModule,
-      JwtModule.forRoot({
-         config: {
-            tokenGetter: tokenGet,
-            whitelistedDomains: ['localhost:5000'],
-            blacklistedRoutes: ['localhost:5000/api/auth']
-         }
-      })
-   ],
-   providers: [
-      AuthService,
-      ErrorInterceptorProvider,
-      AlertifyService,
-      AuthGuard,
-      UserService,
-      MemberDetailResolver,
-      MemberListResolver,
-      MemberEditResolver,
-      PreventUnsavedChanges,
-      { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
-   ],
-   bootstrap: [
-      AppComponent
-   ]
+  declarations: [
+    AppComponent,
+    NavComponent,
+    HomeComponent,
+    RegisterComponent,
+    MemberListComponent,
+    ListsComponent,
+    MessagesComponent,
+    MemberCardComponent,
+    MemberDetailComponent,
+    MemberEditComponent,
+    PhotoEditorComponent,
+    TimeAgoPipe
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BsDropdownModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    TabsModule.forRoot(),
+    RouterModule.forRoot(appRoutes),
+    NgxGalleryModule,
+    FileUploadModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGet,
+        whitelistedDomains: ['localhost:5000'],
+        blacklistedRoutes: ['localhost:5000/api/auth']
+      }
+    })
+  ],
+  providers: [
+    AuthService,
+    ErrorInterceptorProvider,
+    AlertifyService,
+    AuthGuard,
+    UserService,
+    MemberDetailResolver,
+    MemberListResolver,
+    MemberEditResolver,
+    PreventUnsavedChanges,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
