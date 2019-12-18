@@ -1,13 +1,23 @@
 <div class="row">
-  <div class="col-sm-2" *ngFor="let photo of photos">
-    <img src="{{ photo.url }}" class="img-thumbnail p-1" alt="" />
+  <div class="col-sm-2 img-wrapper" *ngFor="let photo of photos">
+    <img
+      src="{{ photo.url }}"
+      class="img-thumbnail p-1"
+      alt=""
+      [ngClass]="!photo.isApproved && 'not-approved'"
+    />
+
+    <div class="text-center" *ngIf="!photo.isApproved">
+      <span class="text-danger">Approving...</span>
+    </div>
+
     <div class="text-center">
       <button
         type="button"
         class="btn btn-sm mr-1"
         (click)="setMainPhoto(photo)"
         [ngClass]="photo.isMain ? 'btn-success active' : 'btn-secondary'"
-        [disabled]="photo.isMain"
+        [disabled]="photo.isMain || !photo.isApproved"
       >
         Main
       </button>
@@ -66,7 +76,7 @@
             <strong>{{ item?.file?.name }}</strong>
           </td>
           <td *ngIf="uploader.options.isHTML5" nowrap>
-            {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+            {{ item?.file?.size / 1024 / 1024 | number: ".2" }} MB
           </td>
         </tr>
       </tbody>

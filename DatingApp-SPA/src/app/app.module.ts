@@ -11,7 +11,8 @@ import {
   TabsModule,
   BsDatepickerModule,
   PaginationModule,
-  ButtonsModule
+  ButtonsModule,
+  ModalModule
 } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -44,6 +45,12 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { ListsResolver } from './_resolvers/lists.resolver';
 import { MessagesResolver } from './_resolvers/messages.resolver';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
+import { HasRoleDirective } from './_directives/hasRole.directive';
+import { AdminPanelComponent } from './admin/user-management/admin-panel/admin-panel.component';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { PhotoManagementComponent } from './admin/user-management/photo-management/photo-management.component';
+import { AdminService } from './_services/admin.service';
+import { RolesModalComponent } from './admin/user-management/roles-modal/roles-modal.component';
 
 export function tokenGet() {
   return localStorage.getItem('token');
@@ -70,7 +77,12 @@ export class CustomHammerConfig extends HammerGestureConfig {
     MemberEditComponent,
     PhotoEditorComponent,
     TimeAgoPipe,
-    MemberMessagesComponent
+    MemberMessagesComponent,
+    AdminPanelComponent,
+    UserManagementComponent,
+    PhotoManagementComponent,
+    HasRoleDirective,
+    RolesModalComponent
   ],
   imports: [
     BrowserModule,
@@ -92,12 +104,14 @@ export class CustomHammerConfig extends HammerGestureConfig {
         whitelistedDomains: ['localhost:5000'],
         blacklistedRoutes: ['localhost:5000/api/auth']
       }
-    })
+    }),
+    ModalModule.forRoot()
   ],
   providers: [
     AuthService,
     ErrorInterceptorProvider,
     AlertifyService,
+    AdminService,
     AuthGuard,
     UserService,
     MemberDetailResolver,
@@ -107,6 +121,9 @@ export class CustomHammerConfig extends HammerGestureConfig {
     ListsResolver,
     PreventUnsavedChanges,
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
+  ],
+  entryComponents: [
+    RolesModalComponent
   ],
   bootstrap: [AppComponent]
 })

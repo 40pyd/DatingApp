@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace DatingApp.API.Controllers
 {
     [ServiceFilter(typeof(LogUserActivity))]
-    [Authorize]
     [Route("api/users/{userId}/[controller]")]
     [ApiController]
     public class MessagesController : ControllerBase
@@ -74,13 +73,13 @@ namespace DatingApp.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMessage(int userId, MessageForCreationDto messageForCreationDto)
         {
-            var sender = await _repo.GetUser(userId); // for automapper magic!!!!
+            var sender = await _repo.GetUser(userId, false); // for automapper magic!!!!
             if (sender.Id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             messageForCreationDto.SenderId = userId;
 
-            var recipient = await _repo.GetUser(messageForCreationDto.RecipientId); // for automapper magic!!!!
+            var recipient = await _repo.GetUser(messageForCreationDto.RecipientId, false); // for automapper magic!!!!
 
             if (recipient == null)
                 return BadRequest("Could not find the user");
@@ -92,7 +91,7 @@ namespace DatingApp.API.Controllers
             if (await _repo.SaveAll())
             {
                 var messageToReturn = _mapper.Map<MessageToReturnDto>(message);
-                return CreatedAtRoute("GetMessage", new { id = message.Id }, messageToReturn);
+                return CreatedAtRoute("GetMessage", new { userId, id = message.Id }, messageToReturn);
             }
 
             throw new Exception("Failed to create the message");

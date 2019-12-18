@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +13,22 @@ export class AuthGuard implements CanActivate {
     private alertify: AlertifyService
   ) {}
 
-  canActivate(): boolean {
+  canActivate(next: ActivatedRouteSnapshot): boolean {
+    const roles = next.firstChild.data['roles'] as Array<string>;
+    if (roles) {
+      const match = this.authService.roleMatch(roles);
+      if (match) {
+        return true;
+      } else {
+        this.router.navigate(['cars']);
+        this.alertify.error('You are not authorized');
+      }
+    }
     if (this.authService.loggedIn()) {
       return true;
     }
 
-    this.alertify.error('You shall not pass!!!');
+    this.alertify.error('error');
     this.router.navigate(['/home']);
     return false;
   }
