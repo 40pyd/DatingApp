@@ -5,6 +5,8 @@ import { UserService } from '../_services/user.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { AuthService } from '../_services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class MemberListResolver implements Resolve<User[]> {
@@ -14,13 +16,15 @@ export class MemberListResolver implements Resolve<User[]> {
   constructor(
     private userService: UserService,
     private router: Router,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private authService: AuthService,
+    private translate: TranslateService
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
     return this.userService.getUsers(this.pageNumber, this.pageSize).pipe(
       catchError(error => {
-        this.alertify.error('Problem retrieving data');
+        this.alertify.error(this.translate.instant('DataProblem'));
         this.router.navigate(['/home']);
         return of(null);
       })

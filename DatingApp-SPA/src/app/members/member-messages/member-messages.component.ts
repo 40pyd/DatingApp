@@ -4,6 +4,7 @@ import { UserService } from 'src/app/_services/user.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { tap } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-member-messages',
@@ -18,7 +19,8 @@ export class MemberMessagesComponent implements OnInit {
   constructor(
     private userService: UserService,
     private alertify: AlertifyService,
-    private authService: AuthService
+    private authService: AuthService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -46,7 +48,7 @@ export class MemberMessagesComponent implements OnInit {
           this.messages = messages;
         },
         error => {
-          this.alertify.error(error);
+          this.alertify.error(this.translate.instant('DataProblem'));
         }
       );
   }
@@ -61,7 +63,7 @@ export class MemberMessagesComponent implements OnInit {
           this.newMessage.content = '';
         },
         error => {
-          this.alertify.error(error);
+          this.alertify.error(this.translate.instant('DataProblem'));
         }
       );
   }

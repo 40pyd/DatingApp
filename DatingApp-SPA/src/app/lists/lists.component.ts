@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../_models/user';
 import { Pagination, PaginatedResult } from '../_models/pagination';
-import { AuthService } from '../_services/auth.service';
 import { UserService } from '../_services/user.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-lists',
@@ -17,18 +17,19 @@ export class ListsComponent implements OnInit {
   likesParams: string;
 
   constructor(
-    private authService: AuthService,
     private userService: UserService,
     private alertify: AlertifyService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      this.users = data['users'].result;
       this.pagination = data['users'].pagination;
     });
-    this.likesParams = 'likers';
+    this.likesParams = '';
+    this.pagination.totalItems = 0;
+    this.pagination.currentPage = 0;
   }
 
   loadUsers() {
@@ -40,7 +41,7 @@ export class ListsComponent implements OnInit {
           this.pagination = res.pagination;
         },
         error => {
-          this.alertify.error(error);
+          this.alertify.error(this.translate.instant('DataProblem'));
         }
       );
   }

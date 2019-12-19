@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from 'src/app/_services/auth.service';
 import { UserService } from 'src/app/_services/user.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-photo-editor',
@@ -22,7 +23,8 @@ export class PhotoEditorComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private userService: UserService,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -71,6 +73,7 @@ export class PhotoEditorComponent implements OnInit {
             'user',
             JSON.stringify(this.authService.currentUser)
           );
+          this.alertify.success(this.translate.instant('MainChangeSuccess'));
         }
       }
     };
@@ -92,22 +95,22 @@ export class PhotoEditorComponent implements OnInit {
           );
         },
         error => {
-          this.alertify.error(error);
+          this.alertify.error(this.translate.instant('DataProblem'));
         }
       );
   }
 
   deletePhoto(id: number) {
-    this.alertify.confirm('Are you sure you want to delete this photo?', () => {
+    this.alertify.confirm(this.translate.instant('PhotoDelConfirm'), () => {
       this.userService
         .deletePhoto(this.authService.decodedToken.nameid, id)
         .subscribe(
           () => {
             this.photos.splice(this.photos.findIndex(p => p.id === id), 1);
-            this.alertify.success('Photo has been deleted');
+            this.alertify.success(this.translate.instant('PhotoDelSuccess'));
           },
           error => {
-            this.alertify.error('Failed to delete the photo');
+            this.alertify.error(this.translate.instant('PhotoDelProblem'));
           }
         );
     });

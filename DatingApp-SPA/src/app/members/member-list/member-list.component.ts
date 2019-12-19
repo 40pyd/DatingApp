@@ -4,6 +4,7 @@ import { UserService } from '../../_services/user.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { Pagination, PaginatedResult } from 'src/app/_models/pagination';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-member-list',
@@ -19,11 +20,13 @@ export class MemberListComponent implements OnInit {
     { value: 'female', display: 'Females' }
   ];
   userParams: any = {};
+  isCollapsed = true;
 
   constructor(
     private userService: UserService,
     private alertify: AlertifyService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -47,6 +50,7 @@ export class MemberListComponent implements OnInit {
     this.userParams.gender = this.user.gender === 'female' ? 'male' : 'female';
     this.userParams.minAge = 18;
     this.userParams.maxAge = 99;
+    this.isCollapsed = true;
     this.loadUsers();
   }
 
@@ -59,7 +63,7 @@ export class MemberListComponent implements OnInit {
           this.pagination = res.pagination;
         },
         error => {
-          this.alertify.error(error);
+          this.alertify.error(this.translate.instant('DataProblem'));
         }
       );
   }

@@ -38,11 +38,25 @@ export class MemberDetailComponent implements OnInit {
 
     this.galleryOptions = [
       {
-        width: '500px',
-        height: '500px',
+        
+        width: '100%',
+        height: '700px',
         imagePercent: 100,
         thumbnailsColumns: 4,
         imageAnimation: NgxGalleryAnimation.Slide,
+        preview: false
+      },
+      {
+        breakpoint: 800,
+        width: '100%',
+        height: '300px',
+        imagePercent: 80,
+        thumbnailsPercent: 20,
+        thumbnailsMargin: 10,
+        thumbnailMargin: 10
+      },
+      {
+        breakpoint: 400,
         preview: false
       }
     ];

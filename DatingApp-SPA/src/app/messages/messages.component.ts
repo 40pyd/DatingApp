@@ -5,6 +5,7 @@ import { UserService } from '../_services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlertifyService } from '../_services/alertify.service';
 import { AuthService } from '../_services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-messages',
@@ -20,7 +21,8 @@ export class MessagesComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private alertify: AlertifyService,
-    private authservice: AuthService
+    private authservice: AuthService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -44,22 +46,22 @@ export class MessagesComponent implements OnInit {
           this.pagination = res.pagination;
         },
         error => {
-          this.alertify.error(error);
+          this.alertify.error(this.translate.instant('DataProblem'));
         }
       );
   }
 
   deleteMessage(id: number) {
-    this.alertify.confirm('Are you sure you want to delete message', () => {
+    this.alertify.confirm(this.translate.instant('MesDelConfirm'), () => {
       this.userService
         .deleteMessage(id, this.authservice.decodedToken.nameid)
         .subscribe(
           () => {
             this.messages.splice(this.messages.findIndex(m => m.id === id), 1);
-            this.alertify.success('Message has been deleted');
+            this.alertify.success(this.translate.instant('MesDelSuccess'));
           },
           error => {
-            this.alertify.error('Failed to delete the message');
+            this.alertify.error(this.translate.instant('MesDelError'));
           }
         );
     });

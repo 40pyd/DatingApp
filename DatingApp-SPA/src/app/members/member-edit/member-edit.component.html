@@ -1,11 +1,12 @@
 <div class="container mt-4">
   <div class="row">
-    <div class="col-sm-4">
-      <h1>Your Profile</h1>
+    <div class="col-sm-4 text-center">
+      <h3>{{ "EditProfile" | translate }}</h3>
     </div>
     <div class="col-sm-8">
       <div *ngIf="editForm.dirty" class="alert alert-info">
-        <strong>Information:</strong> You have made changes. Any unsaved changes will be lost!
+        <strong>{{ "Information" | translate }}:</strong>
+        {{ "Warning" | translate }}
       </div>
     </div>
   </div>
@@ -14,68 +15,79 @@
       <div class="card">
         <img
           class="card-img-top img-thumbnail"
-          src="{{ photoUrl || '../../../assets/user.png'}}"
+          src="{{ photoUrl || '../../../assets/user.png' }}"
           alt="{{ user.knownAs }}"
         />
         <div class="card-body">
           <div>
-            <strong>Location</strong>
+            <strong>{{ "Location" | translate }}:</strong>
             <p>{{ user.city }}, {{ user.country }}</p>
           </div>
           <div>
-            <strong>Age:</strong>
+            <strong>{{ "Age" | translate }}:</strong>
             <p>{{ user.age }}</p>
           </div>
           <div>
-            <strong>Last active:</strong>
+            <strong>{{ "LastActive" | translate }}:</strong>
             <p>{{ user.lastActive | timeAgo }}</p>
           </div>
           <div>
-            <strong>Member since:</strong>
-            <p>{{ user.created | date: 'mediumDate' }}</p>
+            <strong>{{ "MemberSince" | translate }}:</strong>
+            <p>{{ user.created | date: "mediumDate" }}</p>
           </div>
         </div>
         <div class="card-footer">
-          <button [disabled]="!editForm.dirty" form="editForm" class="btn btn-success btn-block">Save Changes</button>
+          <button
+            [disabled]="!editForm.dirty"
+            form="editForm"
+            class="btn btn-success btn-block"
+          >
+            {{ "Save" | translate }}
+          </button>
         </div>
       </div>
     </div>
-    <div class="col-sm-8">
-      <div class="tab-panel">
+    <div class="col-sm-8 mt-2">
+      <div class="tab-panel p-2">
         <tabset class="member-tabset">
-          <tab heading="Edit Profile">
+          <tab
+            class="justify-content-center text-center p-2 mb-1"
+            heading="{{ 'EditProf' | translate }}"
+          >
             <form #editForm="ngForm" id="editForm" (ngSubmit)="updateUser()">
-              <h4>Description</h4>
+              <h4 class="pt-2">{{ "Description" | translate }}</h4>
               <textarea
                 name="introduction"
                 rows="6"
                 class="form-control"
                 [(ngModel)]="user.introduction"
               ></textarea>
-              <h4>Looking For</h4>
+              <h4 class="pt-2">{{ "LookingFor" | translate }}</h4>
               <textarea
                 name="lookingFor"
                 rows="6"
                 class="form-control"
                 [(ngModel)]="user.lookingFor"
               ></textarea>
-              <h4>Interests</h4>
+              <h4 class="pt-2">{{ "Interests" | translate }}</h4>
               <textarea
                 name="interests"
                 rows="6"
                 class="form-control"
                 [(ngModel)]="user.interests"
               ></textarea>
-              <h4>Location details</h4>
+              <h4 class="pt-2">{{ "Location" | translate }}</h4>
               <div class="form-inline">
-                <label for="city">City</label>
+                <label class="pl-2 mr-2" for="city">{{ "City" | translate }}</label>
                 <input
                   name="city"
                   type="text"
                   class="form-control"
                   [(ngModel)]="user.city"
                 />
-                <label for="country">City</label>
+                <label class="pl-2 mr-2" for="country">{{
+                  "Country" | translate
+                }}</label>
                 <input
                   name="country"
                   type="text"
@@ -85,8 +97,14 @@
               </div>
             </form>
           </tab>
-          <tab heading="Edit photos">
-            <app-photo-editor [photos]="user.photos" (getMemberPhotoChange)="updateMainPhoto($event)"></app-photo-editor> 
+          <tab
+            class="justify-content-center text-center p-2 mb-1"
+            heading="{{ 'EditPhotos' | translate }}"
+          >
+            <app-photo-editor
+              [photos]="user.photos"
+              (getMemberPhotoChange)="updateMainPhoto($event)"
+            ></app-photo-editor>
           </tab>
         </tabset>
       </div>

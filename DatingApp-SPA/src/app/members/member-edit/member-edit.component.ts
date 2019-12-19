@@ -5,6 +5,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/_services/user.service';
 import { AuthService } from 'src/app/_services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-member-edit',
@@ -26,7 +27,8 @@ export class MemberEditComponent implements OnInit {
     private route: ActivatedRoute,
     private alertify: AlertifyService,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -41,11 +43,11 @@ export class MemberEditComponent implements OnInit {
       .updateUser(this.authService.decodedToken.nameid, this.user)
       .subscribe(
         next => {
-          this.alertify.success('Profile updated successfully');
+          this.alertify.success(this.translate.instant('ProfileChangeSuccess'));
           this.editForm.reset(this.user);
         },
         error => {
-          this.alertify.error(error);
+          this.alertify.error(this.translate.instant('ProfileChangeProblem'));
         }
       );
   }

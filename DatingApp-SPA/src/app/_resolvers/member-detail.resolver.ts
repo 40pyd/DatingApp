@@ -5,19 +5,21 @@ import { UserService } from '../_services/user.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class MemberDetailResolver implements Resolve<User> {
   constructor(
     private userService: UserService,
     private router: Router,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private translate: TranslateService
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<User> {
     return this.userService.getUser(route.params['id']).pipe(
       catchError(error => {
-        this.alertify.error('Problem retrieving data');
+        this.alertify.error(this.translate.instant('DataProblem'));
         this.router.navigate(['/members']);
         return of(null);
       })

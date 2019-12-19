@@ -4,7 +4,7 @@ import {
   HAMMER_GESTURE_CONFIG
 } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   BsDropdownModule,
@@ -12,7 +12,8 @@ import {
   BsDatepickerModule,
   PaginationModule,
   ButtonsModule,
-  ModalModule
+  ModalModule,
+  CollapseModule
 } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -20,6 +21,8 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -63,6 +66,10 @@ export class CustomHammerConfig extends HammerGestureConfig {
   };
 }
 
+export const createTranslateLoader = (http: HttpClient) => {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,11 +105,19 @@ export class CustomHammerConfig extends HammerGestureConfig {
     RouterModule.forRoot(appRoutes),
     NgxGalleryModule,
     FileUploadModule,
+    CollapseModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGet,
         whitelistedDomains: ['localhost:5000'],
         blacklistedRoutes: ['localhost:5000/api/auth']
+      }
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
       }
     }),
     ModalModule.forRoot()

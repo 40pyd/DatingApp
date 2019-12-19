@@ -1,8 +1,23 @@
-.dropdown-toggle, .dropdown-item{
-    cursor: pointer;
+.dropdown-toggle,
+.dropdown-item {
+  cursor: pointer;
 }
+
 img {
-    max-height: 40px;
-    border: 2px solid white;
-    display: inline;
+  max-height: 40px;
+  border: 2px solid white;
+  border-radius: 40px !important;
+  display: inline;
 }
+
+.langsel {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.langSelect {
+  color: white !important;
+  background-color: slategrey !important;
+}
+

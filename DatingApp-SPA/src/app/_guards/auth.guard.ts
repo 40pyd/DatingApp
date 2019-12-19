@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class AuthGuard implements CanActivate {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private translate: TranslateService
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot): boolean {
@@ -20,15 +22,15 @@ export class AuthGuard implements CanActivate {
       if (match) {
         return true;
       } else {
-        this.router.navigate(['cars']);
-        this.alertify.error('You are not authorized');
+        this.router.navigate(['members']);
+        this.alertify.error(this.translate.instant('NotPass'));
       }
     }
     if (this.authService.loggedIn()) {
       return true;
     }
 
-    this.alertify.error('error');
+    this.alertify.error(this.translate.instant('NotPass'));
     this.router.navigate(['/home']);
     return false;
   }

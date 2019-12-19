@@ -3,6 +3,7 @@ import { User } from '../../_models/user';
 import { AuthService } from 'src/app/_services/auth.service';
 import { UserService } from 'src/app/_services/user.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-member-card',
@@ -15,7 +16,8 @@ export class MemberCardComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private userService: UserService,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {}
@@ -25,10 +27,10 @@ export class MemberCardComponent implements OnInit {
       .sendLike(this.authService.decodedToken.nameid, id)
       .subscribe(
         data => {
-          this.alertify.success('You have liked: ' + this.user.knownAs);
+          this.alertify.success(this.translate.instant('YouLiked') + this.user.knownAs);
         },
         error => {
-          this.alertify.error(error);
+          this.alertify.error(this.translate.instant('DataProblem'));
         }
       );
   }

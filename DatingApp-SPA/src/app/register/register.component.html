@@ -1,15 +1,21 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()">
-  <h2 class="text-center text-primary">Sign Up</h2>
+  <div class="row justify-content-center text-center mt-2">
+    <div class="col-lg-8 col-md-8 col-xs-12">
+      <h2 class="text-center text-light">{{ "SignUp" | translate }}</h2>
+    </div>
+  </div>
   <hr />
+
+  <div class="row justify-content-center text-center">
   <div class="form-group">
-    <label class="control-label" style="margin-right:10px">I am a: </label>
+    <label class="control-label" style="margin-right:10px">{{ "Iam" | translate }} </label>
     <label class="radio-inline">
       <input
         class="mr-3"
         type="radio"
         value="male"
         formControlName="gender"
-      />Male
+      />{{ "Male" | translate }}
     </label>
     <label class="radio-inline ml-3">
       <input
@@ -17,9 +23,10 @@
         type="radio"
         value="female"
         formControlName="gender"
-      />Female
+      />{{ "Female" | translate }}
     </label>
   </div>
+</div>
 
   <div class="form-group">
     <input
@@ -31,9 +38,9 @@
       }"
       class="form-control"
       formControlName="username"
-      placeholder="Username"
+      placeholder="{{ 'Username' | translate }}"
     />
-    <div class="invalid-feedback">Please enter your username</div>
+    <div class="invalid-feedback">{{ "UsernameRequired" | translate }}</div>
   </div>
 
   <div class="form-group">
@@ -44,7 +51,7 @@
           registerForm.get('knownAs').touched
       }"
       class="form-control"
-      placeholder="Known as"
+      placeholder="{{ 'KnownAs' | translate }}"
       formControlName="knownAs"
     />
     <div
@@ -54,7 +61,7 @@
         registerForm.get('knownAs').hasError('required')
       "
     >
-      Known as is required
+    {{ "KnownAsRequired" | translate }}
     </div>
   </div>
 
@@ -66,7 +73,7 @@
           registerForm.get('dateBirth').touched
       }"
       class="form-control"
-      placeholder="Date of Birth"
+      placeholder="{{ 'DateBirth' | translate }}"
       formControlName="dateBirth"
       type="text"
       bsDatepicker
@@ -79,7 +86,7 @@
         registerForm.get('dateBirth').hasError('required')
       "
     >
-      Date of Birth is required
+    {{ "DateBirthRequired" | translate }}
     </div>
   </div>
 
@@ -90,7 +97,7 @@
           registerForm.get('city').errors && registerForm.get('city').touched
       }"
       class="form-control"
-      placeholder="City"
+      placeholder="{{ 'City' | translate }}"
       formControlName="city"
     />
     <div
@@ -100,7 +107,7 @@
         registerForm.get('city').hasError('required')
       "
     >
-      City is required
+    {{ "CityRequired" | translate }}
     </div>
   </div>
 
@@ -112,7 +119,7 @@
           registerForm.get('country').touched
       }"
       class="form-control"
-      placeholder="Country"
+      placeholder="{{ 'Country' | translate }}"
       formControlName="country"
     />
     <div
@@ -122,7 +129,7 @@
         registerForm.get('country').hasError('required')
       "
     >
-      Country is required
+    {{ "CountryRequired" | translate }}
     </div>
   </div>
 
@@ -136,7 +143,7 @@
       }"
       class="form-control"
       formControlName="password"
-      placeholder="Password"
+      placeholder="{{ 'Password' | translate }}"
     />
     <div
       class="invalid-feedback"
@@ -145,7 +152,7 @@
         registerForm.get('password').touched
       "
     >
-      Password is required
+    {{ "PasswordRequired" | translate }}
     </div>
     <div
       class="invalid-feedback"
@@ -154,7 +161,7 @@
         registerForm.get('password').touched
       "
     >
-      Password must be at least 4 characters
+    {{ "PasswordMin" | translate }}
     </div>
     <div
       class="invalid-feedback"
@@ -163,7 +170,7 @@
         registerForm.get('password').touched
       "
     >
-      Password cannot exceed 8 characters
+    {{ "PasswordMax" | translate }}
     </div>
   </div>
 
@@ -179,7 +186,7 @@
       }"
       class="form-control"
       formControlName="confirmPassword"
-      placeholder="Confirm Password"
+      placeholder="{{ 'ConfirmPassword' | translate }}"
     />
     <div
       class="invalid-feedback"
@@ -188,7 +195,7 @@
         registerForm.get('confirmPassword').touched
       "
     >
-      Password is required
+    {{ "ConfirmPasswordRequired" | translate }}
     </div>
     <div
       class="invalid-feedback"
@@ -197,14 +204,21 @@
         registerForm.get('confirmPassword').touched
       "
     >
-      Passwords must match
+    {{ "ConfirmPasswordValid" | translate }}
     </div>
   </div>
 
   <div class="form-group text-center">
-    <button class="btn btn-success" [disabled]="!registerForm.valid" type="submit">Register</button>
+    <button
+      class="btn btn-success"
+      [disabled]="!registerForm.valid"
+      type="submit"
+    >
+    {{ "Register" | translate }}
+    </button>
     <button class="btn btn-default" type="button" (click)="cancel()">
-      Cancel
+      {{ "Cancel" | translate }}
     </button>
   </div>
 </form>
+

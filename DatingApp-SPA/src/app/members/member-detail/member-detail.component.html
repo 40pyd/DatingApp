@@ -1,6 +1,6 @@
 <div class="container mt-4">
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-4 mb-2">
       <div class="card">
         <img
           class="card-img-top img-thumbnail"
@@ -9,49 +9,50 @@
         />
         <div class="card-body">
           <div>
-            <strong>Location</strong>
+            <strong>{{ 'Location' | translate }}:</strong>
             <p>{{ user.city }}, {{ user.country }}</p>
           </div>
           <div>
-            <strong>Age:</strong>
+            <strong>{{ 'Age' | translate }}:</strong>
             <p>{{ user.age }}</p>
           </div>
           <div>
-            <strong>Last active:</strong>
+            <strong>{{ 'LActive' | translate }}:</strong>
             <p>{{ user.lastActive | timeAgo }}</p>
           </div>
           <div>
-            <strong>Member since:</strong>
+            <strong>{{ 'MemberSince' | translate }}:</strong>
             <p>{{ user.created | date: 'mediumDate'}}</p>
           </div>
         </div>
         <div class="card-footer">
           <div class="btn-group d-flex">
-            <button class="btn btn-success w-100" (click)="selectTab(3)">Message</button>
+            <button class="btn btn-success w-100" (click)="selectTab(3)">{{ 'Message' | translate }}</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-8">
-      <div class="tab-panel">
+
+    <div class="col-lg-8 col-sm-8 col-xs-10">
+      <div class="tab-panel pb-2">
         <tabset class="member-tabset" #memberTabs>
-          <tab heading="About {{ user.knownAs }}">
-            <h4>Description</h4>
+          <tab heading="{{ 'About' | translate }}" class="p-3">
+            <h4>{{ 'Description' | translate }}</h4>
             <p>{{ user.introduction }}</p>
-            <h4>Looking For</h4>
+            <h4>{{ 'LookingFor' | translate }}</h4>
             <p>{{ user.lookingFor }}</p>
           </tab>
-          <tab heading="Interests">
-            <h4>Interests</h4>
+          <tab heading="{{ 'Interests' | translate }}" class="p-3">
+            <h4>{{ 'Interests' | translate }}</h4>
             <p>{{ user.interests }}</p>
           </tab>
-          <tab heading="Photos">
+          <tab heading="{{ 'Photos' | translate }}">
             <ngx-gallery
               [options]="galleryOptions"
               [images]="galleryImages"
             ></ngx-gallery>
           </tab>
-          <tab heading="Messages">
+          <tab heading="{{ 'Chat' | translate }}">
             <app-member-messages [recipientId]="user.id"></app-member-messages>
           </tab>
         </tabset>

@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
     <div *ngIf="messages?.length === 0">
-      <p>No messages yet... say hi using the message box below</p>
+      <p>{{ 'NoMessageYet' | translate }}</p>
     </div>
 
     <ul class="chat">
@@ -15,12 +15,12 @@
               class="rounded-circle"
             />
           </span>
-          <div class="caht-body">
+          <div class="chat-body">
             <div class="header">
               <strong class="primary-font">{{ message.senderKnownAs }}</strong>
               <small class="text-muted float-right">
                 <span class="fa fa-clock-o">{{
-                  message.messageSent | timeAgo
+                   message.messageSent | timeAgo
                 }}</span>
               </small>
             </div>
@@ -40,8 +40,8 @@
           <div class="caht-body">
             <div class="header">
               <small class="text-muted">
-                <span class="fa fa-clock-o">{{
-                  message.messageSent | timeAgo
+                <span class="fa fa-clock-o pr-2">{{
+                   message.messageSent | timeAgo
                 }}</span>
                 <span *ngIf="!message.isRead" class="text-danger">
                   (unread)</span
@@ -69,10 +69,10 @@
           name="content"
           required
           class="form-control input-sm"
-          placeholder="send a private message"
+          placeholder="{{ 'SendPrivateMes' | translate }}"
         />
         <div class="input-group-append">
-          <button class="btn btn-primary" [disabled]="!messageForm.valid">Send</button>
+          <button class="btn btn-primary" [disabled]="!messageForm.valid">{{ 'Send' | translate }}</button>
         </div>
       </div>
     </form>

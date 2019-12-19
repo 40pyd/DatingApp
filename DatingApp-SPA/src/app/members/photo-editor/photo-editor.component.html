@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-sm-2 img-wrapper" *ngFor="let photo of photos">
+<div class="row pb-2">
+  <div class="col-sm-4 pt-2 text-center img-wrapper" *ngFor="let photo of photos">
     <img
       src="{{ photo.url }}"
       class="img-thumbnail p-1"
@@ -8,10 +8,10 @@
     />
 
     <div class="text-center" *ngIf="!photo.isApproved">
-      <span class="text-danger">Approving...</span>
+      <span class="text-danger">{{ 'Approving' | translate}}</span>
     </div>
 
-    <div class="text-center">
+    <div class="text-center mt-2">
       <button
         type="button"
         class="btn btn-sm mr-1"
@@ -19,7 +19,7 @@
         [ngClass]="photo.isMain ? 'btn-success active' : 'btn-secondary'"
         [disabled]="photo.isMain || !photo.isApproved"
       >
-        Main
+      {{ 'Main' | translate}}
       </button>
       <button
         type="button"
@@ -35,7 +35,9 @@
 
 <div class="row mt-3">
   <div class="col-md-3">
-    <h3>Add photos</h3>
+    <div class="col justify-content-center text-center">
+      <h3 class="text-success">{{ "AddPhotos" | translate }}</h3>
+    </div>
 
     <div
       ng2FileDrop
@@ -45,13 +47,13 @@
       class="card bg-faded p-3 text-center mb-3 my-drop-zone"
     >
       <i class="fa fa-upload fa-3x"></i>
-      Drop photos here
+      {{ "Drop" | translate }}
     </div>
 
-    Multiple
+    <span class="text-success">{{ "Multiple" | translate }}</span>
     <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
 
-    Single
+    <span class="text-success">{{ "Single" | translate }}</span>
     <input type="file" ng2FileSelect [uploader]="uploader" />
   </div>
 
@@ -60,14 +62,14 @@
     class="col-md-9"
     style="margin-bottom: 40px"
   >
-    <h3>Upload queue</h3>
-    <p>Queue length: {{ uploader?.queue?.length }}</p>
+  <h3 class="text-success">{{ "UploadQuene" | translate }}</h3>
+    <p>{{ "UploadLength" | translate }}: {{ uploader?.queue?.length }}</p>
 
     <table class="table">
       <thead>
         <tr>
-          <th width="50%">Name</th>
-          <th>Size</th>
+          <th width="50%">{{ "Name" | translate }}</th>
+          <th>{{ "Size" | translate }}</th>
         </tr>
       </thead>
       <tbody>
@@ -76,7 +78,7 @@
             <strong>{{ item?.file?.name }}</strong>
           </td>
           <td *ngIf="uploader.options.isHTML5" nowrap>
-            {{ item?.file?.size / 1024 / 1024 | number: ".2" }} MB
+            {{ item?.file?.size / 1024 / 1024 | number: ".2" }} {{ "MB" | translate }}
           </td>
         </tr>
       </tbody>
@@ -84,7 +86,7 @@
 
     <div>
       <div>
-        Queue progress:
+        {{ "QueneProg" | translate }}:
         <div class="progress mb-4">
           <div
             class="progress-bar"
@@ -99,7 +101,7 @@
         (click)="uploader.uploadAll()"
         [disabled]="!uploader.getNotUploadedItems().length"
       >
-        <span class="fa fa-upload"></span> Upload
+        <span class="fa fa-upload"></span> {{ "Upload" | translate }}
       </button>
       <button
         type="button"
@@ -107,7 +109,7 @@
         (click)="uploader.cancelAll()"
         [disabled]="!uploader.isUploading"
       >
-        <span class="fa fa-ban"></span> Cancel
+        <span class="fa fa-ban"></span> {{ "Cancel" | translate }}
       </button>
       <button
         type="button"
@@ -115,8 +117,28 @@
         (click)="uploader.clearQueue()"
         [disabled]="!uploader.queue.length"
       >
-        <span class="fa fa-trash"></span> Remove
+        <span class="fa fa-trash"></span> {{ "Remove" | translate }}
       </button>
     </div>
+  </div>
+</div>
+<div class="row justify-content-center">
+  <div class="form-group btn-group text-center pt-3">
+    <button
+      class="btn btn-success"
+      type="button"
+      [routerLink]="['/members']"
+    >
+      <i class="fa fa-check-square-o mr-3"></i>
+      {{ "Save" | translate }}
+    </button>
+    <button
+      class="btn btn-primary"
+      type="button"
+      [routerLink]="['/members']"
+    >
+      <i class="fa fa-ban mr-2"></i>
+      {{ "BackList" | translate }}
+    </button>
   </div>
 </div>

@@ -1,22 +1,24 @@
 <div class="text-center mt-3">
-  <h2>
-    {{
-      likesParams === 'Likers' ? 'Members who like me' : "Members who I've Liked"
-    }}
+  <h4 *ngIf="likesParams === 'Likers'">{{'MembersWhoLike' | translate}}
+
     : {{ pagination.totalItems }}
-  </h2>
+  </h4>
+  <h4 *ngIf="likesParams === 'Likees'">{{'MembersWhoLiked' | translate}}
+
+    : {{ pagination.totalItems }}
+  </h4>
 </div>
 
 <div class="container mt-3">
-  <div class="row">
+  <div class="row justify-content-center p-2">
     <div class="btn-group">
       <button
-        class="btn btn-primary"
+        class="btn btn-primary mr-2"
         [(ngModel)]="likesParams"
         btnRadio="Likers"
         (click)="loadUsers()"
       >
-        Members who like me
+      {{'WhoLike' | translate}}
       </button>
       <button
         class="btn btn-primary"
@@ -24,7 +26,7 @@
         btnRadio="Likees"
         (click)="loadUsers()"
       >
-        Members who I like
+      {{'WhoLiked' | translate}}
       </button>
     </div>
   </div>

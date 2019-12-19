@@ -10,6 +10,7 @@ import {
 import { BsDatepickerConfig } from 'ngx-bootstrap';
 import { User } from '../_models/user';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +27,8 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
     private alertify: AlertifyService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    public translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -70,10 +72,10 @@ export class RegisterComponent implements OnInit {
       this.user = Object.assign({}, this.registerForm.value);
       this.authService.register(this.user).subscribe(
         () => {
-          this.alertify.success('Registration successfull');
+          this.alertify.success(this.translate.instant('RegSucces'));
         },
         error => {
-          this.alertify.error(error);
+          this.alertify.error(this.translate.instant('RegError'));
         },
         () => {
           this.authService.login(this.user).subscribe(() => {
