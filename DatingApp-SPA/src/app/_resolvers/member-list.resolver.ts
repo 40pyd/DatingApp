@@ -17,7 +17,6 @@ export class MemberListResolver implements Resolve<User[]> {
     private userService: UserService,
     private router: Router,
     private alertify: AlertifyService,
-    private authService: AuthService,
     private translate: TranslateService
   ) {}
 

@@ -25,11 +25,10 @@ export class ListsComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
+      this.users = data['users'].result;
       this.pagination = data['users'].pagination;
     });
-    this.likesParams = '';
-    this.pagination.totalItems = 0;
-    this.pagination.currentPage = 0;
+    this.likesParams = 'Likers';
   }
 
   loadUsers() {

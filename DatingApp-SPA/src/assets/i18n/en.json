@@ -107,5 +107,6 @@
   "LoginSuccess" : "Logged in succesfuly",
   "LoginError": "Username or password are incorrect!",
   "RegSuccess": "Registration is successful!",
-  "RegError": "Registration failed!"
+  "RegError": "Registration failed!",
+  "LikeError" : "You already liked this user!"
 }

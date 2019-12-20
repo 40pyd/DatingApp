@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class ListsResolver implements Resolve<User[]> {
   pageNumber = 1;
   pageSize = 5;
-  likesParam = 'likers';
+  likesParams = 'Likers';
 
   constructor(
     private userService: UserService,
@@ -21,7 +21,7 @@ export class ListsResolver implements Resolve<User[]> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<User[]> {
-    return this.userService.getUsers(this.pageNumber, this.pageSize, null, this.likesParam).pipe(
+    return this.userService.getUsers(this.pageNumber, this.pageSize, null, this.likesParams).pipe(
       catchError(error => {
         this.alertify.error(this.translate.instant('DataProblem'));
         this.router.navigate(['/home']);

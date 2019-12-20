@@ -14,6 +14,7 @@ namespace DatingApp.API.Data
             {
                 var userData = System.IO.File.ReadAllText("Data/UserSeedData.json");
                 var users = JsonConvert.DeserializeObject<List<User>>(userData);
+
                 var roles = new List<Role>
                 {
                     new Role {Name="Member"},
@@ -33,6 +34,7 @@ namespace DatingApp.API.Data
                     userManager.CreateAsync(user, "password").Wait();
                     userManager.AddToRoleAsync(user, "Member");
                 }
+
 
                 var adminUser = new User
                 {

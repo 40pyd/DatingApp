@@ -30,7 +30,7 @@ export class MemberCardComponent implements OnInit {
           this.alertify.success(this.translate.instant('YouLiked') + this.user.knownAs);
         },
         error => {
-          this.alertify.error(this.translate.instant('DataProblem'));
+          this.alertify.error(this.translate.instant('LikeError'));
         }
       );
   }
